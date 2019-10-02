@@ -7,7 +7,7 @@ android {
         applicationId "com.tregz.mvc"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 1
+        versionCode 20190920
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -29,7 +29,10 @@ dependencies {
     // Google's Material Design
     implementation 'com.google.android.material:material:1.1.0-alpha10'
 
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'androidx.navigation:navigation-fragment:2.1.0'
+    implementation 'androidx.navigation:navigation-ui:2.1.0'
 }

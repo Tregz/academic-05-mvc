@@ -1,64 +1,51 @@
 package com.tregz.mvc.main;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.tregz.mvc.R;
-import com.tregz.mvc.data.DataApple;
-import com.tregz.mvc.core.date.DateUtil;
-import com.tregz.mvc.list.ListApple;
-import com.tregz.mvc.view.ViewApple;
+import com.tregz.mvc.base.BaseActivity;
+import com.tregz.mvc.main.auth.AuthFragment;
 
-import java.util.Date;
-
-public class MainActivity extends AppCompatActivity implements ViewApple {
-
-    private final String TAG = MainActivity.class.getSimpleName();
-    private final ListApple listApple = new ListApple(this);
+public class MainActivity extends BaseActivity implements MainListener {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        DataApple apple1 = new DataApple(new Date());  // today
-        listApple.add(apple1);
-        listApple.add(apple1);
-        apple1.setColor(R.color.colorAccent);
-        Log.i(TAG, "La pomme 1 est comestible? " + apple1.edible());
-        Log.i(TAG, "La pomme 1 est de couleur: " + apple1.getColor());
-
-        DataApple apple2 = new DataApple(DateUtil.addMonth(new Date(), -1)); // last month
-        listApple.add(apple2);
-        apple2.setColor(android.R.color.white);
-        Log.i(TAG, "La pomme 2 est comestible? " + apple2.edible());
-        Log.i(TAG, "La pomme 2 est de couleur: " + apple2.getColor());
-
-        DataApple apple3 = new DataApple(null);
-        listApple.add(apple3);
-        apple3.setColor(R.color.colorPrimary);
-        Log.i(TAG, "La pomme 3 est comestible? " + apple3.edible());
-        Log.i(TAG, "La pomme 3 est de couleur: " + apple3.getColor());
-
-        DataApple apple4 = apple();
-        Log.i(TAG, "La pomme 4 est comestible? " + apple4.edible());
-        Log.i(TAG, "La pomme 4 est de couleur: " + apple4.getColor());
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, new MainFragment()).commitNow();
     }
 
     @Override
-    public void onAppleCreated(int listSize, int setSize) {
-        Log.i(TAG, "Pomme ajoutée");
-        Log.i(TAG, "Taille de la liste: " + listSize);
-        Log.i(TAG, "Taille de l'ensemble: " + setSize);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
-    public DataApple apple() {
-        DataApple apple = new DataApple(new Date());
-        apple.setColor(R.color.colorPrimary);
-        listApple.add(apple);
-        return apple;
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.login:
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    getSupportFragmentManager().popBackStack();
+                    item.setIcon(R.drawable.ic_person);
+                } else {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container, new AuthFragment(), AuthFragment.TAG)
+                            .addToBackStack(AuthFragment.TAG).commit();
+                    item.setIcon(R.drawable.ic_arrow_back);
+                }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    static {
+        TAG = MainActivity.class.getSimpleName();
     }
 }

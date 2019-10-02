@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">MVC</string>
+    <string name="action_login">S\'authentifier</string>
+    <string name="action_negative">Réessayer</string>
+    <string name="action_positive">Valider</string>
+    <string name="input_hint">Combien y a-t-il de pomme?</string>
+    <string name="answer_negative">Veuillez réessayer</string>
+    <string name="answer_positive">Bonne réponse</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -7,7 +7,7 @@ import android.os.Handler;
 
 import androidx.annotation.Nullable;
 
-public class MainLauncher extends Activity {
+public class MainIntent extends Activity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
